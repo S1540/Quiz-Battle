@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Menu, X } from "lucide-react";
 import logo from "../../assets/Quiz logo.mp4";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -39,13 +40,13 @@ const Header = () => {
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center space-x-1">
               {navLinks.map((navlink, index) => (
-                <a
+                <Link
                   key={index}
-                  href={navlink.link}
+                  to={navlink.link}
                   className="text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-white/20 transition-all duration-300 hover:scale-105 hover:shadow-lg"
                 >
                   {navlink.nav}
-                </a>
+                </Link>
               ))}
             </nav>
 
@@ -93,9 +94,9 @@ const Header = () => {
         >
           <nav className="flex flex-col p-6 space-y-2">
             {navLinks.map((navlink, index) => (
-              <a
+              <Link
                 key={index}
-                href={navlink.link}
+                to={navlink.link}
                 onClick={toggleMenu}
                 className="text-white px-6 py-4 rounded-md text-base font-medium hover:bg-white/20 transition-all duration-300 transform hover:translate-x-2 hover:shadow-lg border border-transparent hover:border-white/30"
                 style={{
@@ -105,7 +106,7 @@ const Header = () => {
                 }}
               >
                 {navlink.nav}
-              </a>
+              </Link>
             ))}
           </nav>
         </div>

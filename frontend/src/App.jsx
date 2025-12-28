@@ -1,19 +1,24 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
-import HomePage from "./components/HomePage";
+import HomePage from "./components/pages/HomePage";
 import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
+import OnlineQuiz from "./components/pages/OnlineQuiz";
 
 function App() {
   const [count, setCount] = useState(0);
 
   return (
     <>
-      <Header />
-      <HomePage />
-      <Footer />
+      <Router>
+        <Header />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/onlineQuiz" element={<OnlineQuiz />} />
+        </Routes>
+        <Footer />
+      </Router>
     </>
   );
 }
