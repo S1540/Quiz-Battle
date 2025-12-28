@@ -11,6 +11,7 @@ import {
 
 const OnlineQuiz = () => {
   const [timer, setTimer] = useState(15);
+  const [questions, setQuestions] = useState(null);
   const maxTime = 15;
 
   // Timer countdown
@@ -22,6 +23,22 @@ const OnlineQuiz = () => {
       return () => clearInterval(interval);
     }
   }, [timer]);
+
+  // Fetch Quiz Question
+  useEffect(() => {
+    const fetchQuestion = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/api/get-questions");
+        const data = await response.json();
+        setQuestions(data);
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchQuestion();
+  }, []);
 
   return (
     <section className="min-h-screen bg-linear-to-br from-zinc-900 via-purple-900/10 to-zinc-900">
@@ -167,7 +184,7 @@ const OnlineQuiz = () => {
               </div>
 
               <p className="tracking-wide text-xl md:text-2xl font-medium mb-4">
-                1. What is the capital of India?
+                What is the capital of India?
               </p>
 
               {/* User Options */}
