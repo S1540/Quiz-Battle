@@ -7,7 +7,10 @@ router.get("/get-questions", async (req, res) => {
     const count = await Question.countDocuments();
     const randomQuestion = Math.floor(Math.random() * count);
     const questions = await Question.findOne().skip(randomQuestion);
-    res.status(200).json(questions);
+    res.status(200).json({
+      success: true,
+      question: questions,
+    });
     // console.log(data);
   } catch (error) {
     res.status(500).json({ message: error.message });
