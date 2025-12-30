@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import {
   Trophy,
   Zap,
@@ -73,11 +74,13 @@ const HomePage = () => {
               knowledge, compete for prizes, and become a legend!
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <button className="group relative px-8 py-4 bg-linear-to-r from-yellow-400 to-orange-500 text-black font-bold rounded-md text-lg hover:scale-105 transition-all duration-300 shadow-2xl hover:shadow-yellow-500/50 flex items-center gap-2 cursor-pointer">
-                <Play className="w-5 h-5" />
-                Start Playing Now
-                <div className="absolute inset-0 rounded-xl bg-white opacity-0 group-hover:opacity-20 transition-opacity"></div>
-              </button>
+              <Link to={"/onlineQuiz"}>
+                <button className="group relative px-8 py-4 bg-linear-to-r from-yellow-400 to-orange-500 text-black font-bold rounded-md text-lg hover:scale-105 transition-all duration-300 shadow-2xl hover:shadow-yellow-500/50 flex items-center gap-2 cursor-pointer">
+                  <Play className="w-5 h-5" />
+                  Start Playing Now
+                  <div className="absolute inset-0 rounded-xl bg-white opacity-0 group-hover:opacity-20 transition-opacity"></div>
+                </button>
+              </Link>
               <button className="px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-bold rounded-md text-lg hover:bg-white/20 transition-all duration-300 border border-white/20 cursor-pointer">
                 Watch Demo
               </button>
