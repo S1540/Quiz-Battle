@@ -5,6 +5,7 @@ import HomePage from "./components/pages/HomePage";
 import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
 import OnlineQuiz from "./components/pages/OnlineQuiz";
+import LoginSignup from "./components/pages/LoginSignup";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -16,6 +17,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/onlineQuiz" element={<OnlineQuiz />} />
+          <Route path="/profile" element={<LoginSignup />} />
         </Routes>
         <Footer />
       </Router>
