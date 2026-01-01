@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const questionRoutes = require("./routes/offlineRoutes");
+const authRoutes = require("./routes/authRoutes");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv").config();
 const app = express();
@@ -22,6 +23,7 @@ mongoose
   .catch((err) => console.log(err));
 
 app.use("/api", questionRoutes);
+app.use("/api/auth", authRoutes);
 
 app.get("/", (req, res) => {
   res.send("Server is running successfully 😎");

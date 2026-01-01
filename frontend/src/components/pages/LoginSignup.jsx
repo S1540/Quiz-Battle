@@ -3,9 +3,71 @@ import { Github, Chrome, Facebook } from "lucide-react";
 
 const LoginSignup = () => {
   const [isLogin, setIsLogin] = useState(true);
+  const [signUpValues, setSignUpValues] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
+  const [loginValues, setLoginValues] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleLoginChange = (e) => {
+    const { name, value } = e.target;
+    setLoginValues({
+      ...loginValues,
+      [name]: value,
+    });
+  };
+
+  const handleSignUpChange = (e) => {
+    const { name, value } = e.target;
+    setSignUpValues({
+      ...signUpValues,
+      [name]: value,
+    });
+  };
+
+  const handleSignUpSubmit = async (e) => {
+    e.preventDefault();
+    const response = await fetch("http://localhost:5000/api/auth/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(signUpValues),
+      credentials: "include",
+    });
+    const data = await response.json();
+    setSignUpValues({
+      username: "",
+      email: "",
+      password: "",
+    });
+    // console.log(data);
+  };
+
+  const handleLoginSubmit = async (e) => {
+    e.preventDefault();
+    const response = await fetch("http://localhost:5000/api/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(loginValues),
+      credentials: "include",
+    });
+    const data = await response.json();
+    setLoginValues({
+      email: "",
+      password: "",
+    });
+    console.log(data);
+  };
 
   return (
-    <section className="min-h-screen flex items-center justify-center bg-gradient-to-r from-purple-900/30 to-blue-900/30">
+    <section className="min-h-screen flex items-center justify-center bg-linear-to-r from-purple-900/30 to-blue-900/30">
       <div className="relative w-full max-w-md bg-zinc-900/80 border border-zinc-700 rounded-2xl overflow-hidden shadow-2xl">
         {/* Toggle Tabs */}
         <div className="relative flex">
@@ -27,7 +89,7 @@ const LoginSignup = () => {
           </button>
 
           <div
-            className={`absolute top-0 left-0 h-full w-1/2 bg-gradient-to-r from-purple-600 to-pink-600 transition-transform duration-500 ${
+            className={`absolute top-0 left-0 h-full w-1/2 bg-linear-to-r from-purple-600 to-pink-600 transition-transform duration-500 ${
               isLogin ? "translate-x-0" : "translate-x-full"
             }`}
           />
@@ -37,6 +99,7 @@ const LoginSignup = () => {
         <div className="relative h-[550px]">
           {/* LOGIN */}
           <form
+            onSubmit={handleLoginSubmit}
             className={`absolute inset-0 p-6 transition-all duration-500 ${
               isLogin
                 ? "opacity-100 translate-x-0"
@@ -52,19 +115,25 @@ const LoginSignup = () => {
 
             <input
               type="email"
+              name="email"
+              onChange={handleLoginChange}
+              value={loginValues.email}
               placeholder="Email"
               className="w-full mb-4 px-4 py-3 rounded-lg bg-zinc-800 text-white border border-zinc-700 outline-none focus:border-purple-500"
             />
 
             <input
               type="password"
+              name="password"
+              onChange={handleLoginChange}
+              value={loginValues.password}
               placeholder="Password"
               className="w-full mb-4 px-4 py-3 rounded-lg bg-zinc-800 text-white border border-zinc-700 outline-none focus:border-purple-500"
             />
 
             <button
               type="submit"
-              className="w-full py-3 mb-4 rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold hover:opacity-90 transition"
+              className="w-full py-3 mb-4 rounded-lg bg-linear-to-r from-purple-600 to-pink-600 text-white font-semibold hover:opacity-90 transition"
             >
               Login
             </button>
@@ -97,6 +166,7 @@ const LoginSignup = () => {
 
           {/* SIGNUP */}
           <form
+            onSubmit={handleSignUpSubmit}
             className={`absolute inset-0 p-6 transition-all duration-500 ${
               !isLogin
                 ? "opacity-100 translate-x-0"
@@ -112,25 +182,34 @@ const LoginSignup = () => {
 
             <input
               type="text"
-              placeholder="Full Name"
+              placeholder="Username"
+              name="username"
+              value={signUpValues.username}
+              onChange={handleSignUpChange}
               className="w-full mb-4 px-4 py-3 rounded-lg bg-zinc-800 text-white border border-zinc-700 outline-none focus:border-purple-500"
             />
 
             <input
               type="email"
               placeholder="Email"
+              name="email"
+              value={signUpValues.email}
+              onChange={handleSignUpChange}
               className="w-full mb-4 px-4 py-3 rounded-lg bg-zinc-800 text-white border border-zinc-700 outline-none focus:border-purple-500"
             />
 
             <input
               type="password"
               placeholder="Password"
+              name="password"
+              value={signUpValues.password}
+              onChange={handleSignUpChange}
               className="w-full mb-4 px-4 py-3 rounded-lg bg-zinc-800 text-white border border-zinc-700 outline-none focus:border-purple-500"
             />
 
             <button
               type="submit"
-              className="w-full py-3 rounded-lg bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-semibold hover:opacity-90 transition"
+              className="w-full py-3 rounded-lg bg-linear-to-r from-blue-600 to-cyan-600 text-white font-semibold hover:opacity-90 transition"
             >
               Sign Up
             </button>
