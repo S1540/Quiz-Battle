@@ -1,5 +1,6 @@
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
+const GithubStrategy = require("passport-github2").Strategy;
 const User = require("../models/LoginSchema");
 
 passport.use(
@@ -29,4 +30,37 @@ passport.use(
     }
   )
 );
+
+// Github Strategy
+passport.use(
+  new GithubStrategy(
+    {
+      clientID: process.env.GITHUB_CLIENT_ID,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET,
+      callbackURL: "http://localhost:5000/api/auth/github/callback",
+    },
+    async (accessToken, refreshToken, profile, done) => {
+      try {
+        const email =
+          profile.emails && profile.emails.length > 0
+            ? profile.emails[0].value
+            : `${profile.username}@github.com`;
+
+        let user = await User.findOne({ email });
+        if (!user) {
+          user = await User.create({
+            username: profile.username,
+            email,
+            password: null,
+            provider: "github",
+          });
+        }
+        done(null, user);
+      } catch (error) {
+        done(error, null);
+      }
+    }
+  )
+);
+
 module.exports = passport;

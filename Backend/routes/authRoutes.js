@@ -132,4 +132,36 @@ router.get(
   }
 );
 
+// Github OAuth Routes
+router.get(
+  "/github",
+  passport.authenticate("github", (scope = ["user:email"]))
+);
+
+router.get(
+  "/github/callback",
+  passport.authenticate("github", {
+    session: false,
+    failureRedirect: "http://localhost:5173/profile",
+  }),
+  (req, res) => {
+    try {
+      const token = jwt.sign(
+        { email: req.body.email },
+        process.env.JWT_SECRET,
+        { expiresIn: "1h" }
+      );
+      res.cookie("token", token, {
+        httpOnly: true,
+        // secure: process.env.NODE_ENV === "production",
+        // sameSite: "strict",
+      });
+      res.redirect("http://localhost:5173/onlineQuiz");
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+      res.redirect("http://localhost:5173/profile");
+    }
+  }
+);
+
 module.exports = router;

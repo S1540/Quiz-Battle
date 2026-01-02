@@ -210,6 +210,10 @@ const LoginSignup = () => {
 
               <button
                 type="button"
+                onClick={() =>
+                  (window.location.href =
+                    "http://localhost:5000/api/auth/github")
+                }
                 className="w-full flex items-center justify-center gap-3 py-3 rounded-lg bg-zinc-800 border border-zinc-700 text-white hover:bg-zinc-700 transition"
               >
                 <Github className="w-5 h-5" />

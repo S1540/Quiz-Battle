@@ -39,6 +39,7 @@ const ProfilePage = () => {
             <p className="font-medium capitalize">
               {user?.provider || "local"}
             </p>
+            <img src={user?.photo} alt="" />
           </div>
         </div>
       </div>
