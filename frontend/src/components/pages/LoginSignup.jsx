@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Github, Chrome, Facebook } from "lucide-react";
+import { Github, Facebook, Chrome } from "lucide-react";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";

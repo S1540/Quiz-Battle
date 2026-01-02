@@ -79,10 +79,14 @@ router.get("/me", async (req, res) => {
         authenticated: false,
       });
     }
-    jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findOne({ email: decoded.email }).select(
+      "-password"
+    );
     res.status(200).json({
       message: "Authenticated",
       authenticated: true,
+      user,
     });
   } catch (error) {
     res.status(500).json({ message: error.message });

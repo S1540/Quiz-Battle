@@ -8,6 +8,7 @@ import OnlineQuiz from "./components/pages/OnlineQuiz";
 import LoginSignup from "./components/pages/LoginSignup";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./routes/ProtectedRoute";
+import ProfilePage from "./components/pages/Profile/ProfilePage";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -30,7 +31,7 @@ function App() {
               }
             />
 
-            <Route path="/profile" element={<LoginSignup />} />
+            <Route path="/profile" element={<ProfilePage />} />
           </Routes>
           <Footer />
         </Router>
