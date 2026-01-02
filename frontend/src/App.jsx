@@ -6,21 +6,35 @@ import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
 import OnlineQuiz from "./components/pages/OnlineQuiz";
 import LoginSignup from "./components/pages/LoginSignup";
+import { AuthProvider } from "./context/AuthContext";
+import ProtectedRoute from "./routes/ProtectedRoute";
 
 function App() {
   const [count, setCount] = useState(0);
 
   return (
     <>
-      <Router>
-        <Header />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/onlineQuiz" element={<OnlineQuiz />} />
-          <Route path="/profile" element={<LoginSignup />} />
-        </Routes>
-        <Footer />
-      </Router>
+      <AuthProvider>
+        <Router>
+          <Header />
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            {/* Protected Routes */}
+
+            <Route
+              path="/onlineQuiz"
+              element={
+                <ProtectedRoute>
+                  <OnlineQuiz />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route path="/profile" element={<LoginSignup />} />
+          </Routes>
+          <Footer />
+        </Router>
+      </AuthProvider>
     </>
   );
 }

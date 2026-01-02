@@ -4,17 +4,19 @@ const User = require("../models/LoginSchema");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
+const dotenv = require("dotenv").config();
+const passport = require("../config/passport");
 router.use(cookieParser());
 
 // User Registration
 router.post("/register", async (req, res) => {
   try {
     const { username, email, password } = req.body;
-    const hashedPassword = await bcrypt.hash(password, 10);
     const exitingUser = await User.findOne({ email });
     if (exitingUser) {
       return res.status(400).json({ message: "User already exists" });
     }
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = new User({
       username,
@@ -25,7 +27,6 @@ router.post("/register", async (req, res) => {
     res.status(201).json({
       success: true,
       message: "User registered successfully",
-      newUser,
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -67,5 +68,64 @@ router.post("/login", async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+
+// Authentication Check
+router.get("/me", async (req, res) => {
+  try {
+    const token = req.cookies.token;
+    if (!token) {
+      return res.status(401).json({
+        message: "Unauthorized",
+        authenticated: false,
+      });
+    }
+    jwt.verify(token, process.env.JWT_SECRET);
+    res.status(200).json({
+      message: "Authenticated",
+      authenticated: true,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+/*=====================
+Google OAuth Routes
+=====================*/
+router.get(
+  "/google",
+  passport.authenticate("google", {
+    scope: ["profile", "email"],
+  })
+);
+
+router.get(
+  "/google/callback",
+  passport.authenticate("google", {
+    session: false,
+    failureRedirect: "http://localhost:5173/profile",
+  }),
+  (req, res) => {
+    try {
+      const token = jwt.sign(
+        { email: req.user.email },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: "1h",
+        }
+      );
+      res.cookie("token", token, {
+        httpOnly: true,
+        // secure: process.env.NODE_ENV === "production",
+        // sameSite: "strict",
+        // maxAge: 3600000, // 1 hour
+      });
+      res.redirect("http://localhost:5173/onlineQuiz");
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+      res.redirect("http://localhost:5000/profile");
+    }
+  }
+);
 
 module.exports = router;

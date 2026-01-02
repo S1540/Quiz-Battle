@@ -1,8 +1,13 @@
 import React, { useState } from "react";
 import { Github, Chrome, Facebook } from "lucide-react";
-
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 const LoginSignup = () => {
+  const navigate = useNavigate();
+  const { setIsAuth } = useContext(AuthContext);
   const [isLogin, setIsLogin] = useState(true);
+  const [message, setMessage] = useState("");
   const [signUpValues, setSignUpValues] = useState({
     username: "",
     email: "",
@@ -31,6 +36,17 @@ const LoginSignup = () => {
 
   const handleSignUpSubmit = async (e) => {
     e.preventDefault();
+    if (
+      !signUpValues.username ||
+      !signUpValues.email ||
+      !signUpValues.password
+    ) {
+      setMessage("All fields are required");
+      setTimeout(() => {
+        setMessage("");
+      }, 2000);
+      return;
+    }
     const response = await fetch("http://localhost:5000/api/auth/register", {
       method: "POST",
       headers: {
@@ -45,11 +61,27 @@ const LoginSignup = () => {
       email: "",
       password: "",
     });
+    if (data.success) {
+      setMessage(data.message);
+      setTimeout(() => {
+        setMessage("");
+        setIsLogin(true);
+      }, 1000);
+    }
     // console.log(data);
   };
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
+
+    if (!loginValues.email || !loginValues.password) {
+      setMessage("Email and Password are required");
+      setTimeout(() => {
+        setMessage("");
+      }, 2000);
+      return;
+    }
+
     const response = await fetch("http://localhost:5000/api/auth/login", {
       method: "POST",
       headers: {
@@ -63,7 +95,22 @@ const LoginSignup = () => {
       email: "",
       password: "",
     });
-    console.log(data);
+    if (data.success === false) {
+      setMessage(data.message);
+      setTimeout(() => {
+        setMessage("");
+      }, 2000);
+    }
+    if (data.success === true) {
+      setMessage(data.message);
+      setTimeout(() => {
+        setMessage("");
+        setIsAuth(true);
+        navigate("/onlineQuiz");
+      }, 1000);
+    }
+
+    // console.log(data);
   };
 
   return (
@@ -112,7 +159,9 @@ const LoginSignup = () => {
             <p className="text-sm text-gray-400 mb-6">
               Login to continue the quiz battle
             </p>
-
+            {message && (
+              <p className="bg-red-600 px-4 py-2 rounded-md mb-5">{message}</p>
+            )}
             <input
               type="email"
               name="email"
@@ -147,17 +196,30 @@ const LoginSignup = () => {
 
             {/* Social Login */}
             <div className="space-y-3">
-              <button className="w-full flex items-center justify-center gap-3 py-3 rounded-lg bg-zinc-800 border border-zinc-700 text-white hover:bg-zinc-700 transition">
+              <button
+                type="button"
+                onClick={() =>
+                  (window.location.href =
+                    "http://localhost:5000/api/auth/google")
+                }
+                className="w-full flex items-center justify-center gap-3 py-3 rounded-lg bg-zinc-800 border border-zinc-700 text-white hover:bg-zinc-700 transition"
+              >
                 <Chrome className="w-5 h-5 text-red-400" />
                 Continue with Google
               </button>
 
-              <button className="w-full flex items-center justify-center gap-3 py-3 rounded-lg bg-zinc-800 border border-zinc-700 text-white hover:bg-zinc-700 transition">
+              <button
+                type="button"
+                className="w-full flex items-center justify-center gap-3 py-3 rounded-lg bg-zinc-800 border border-zinc-700 text-white hover:bg-zinc-700 transition"
+              >
                 <Github className="w-5 h-5" />
                 Continue with GitHub
               </button>
 
-              <button className="w-full flex items-center justify-center gap-3 py-3 rounded-lg bg-zinc-800 border border-zinc-700 text-white hover:bg-zinc-700 transition">
+              <button
+                type="button"
+                className="w-full flex items-center justify-center gap-3 py-3 rounded-lg bg-zinc-800 border border-zinc-700 text-white hover:bg-zinc-700 transition"
+              >
                 <Facebook className="w-5 h-5 text-blue-500" />
                 Continue with Facebook
               </button>
@@ -179,7 +241,11 @@ const LoginSignup = () => {
             <p className="text-sm text-gray-400 mb-6">
               Join and start the quiz battle
             </p>
-
+            {message && (
+              <p className="bg-green-600 px-4 py-2 rounded-md mb-5">
+                {message}
+              </p>
+            )}
             <input
               type="text"
               placeholder="Username"
