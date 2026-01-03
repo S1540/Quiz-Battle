@@ -20,6 +20,14 @@ const loginSchema = new mongoose.Schema(
       required: null,
       minlength: 6,
     },
+    provider: {
+      type: String,
+      default: "local",
+      enum: ["local", "google", "facebook", "github"],
+    },
+    picture: {
+      type: String,
+    },
   },
   { timestamps: true }
 );

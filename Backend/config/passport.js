@@ -14,11 +14,14 @@ passport.use(
     async (accessToken, refreshToken, profile, done) => {
       try {
         const email = profile.emails[0].value;
+        const picture =
+          profile.photos?.[0]?.value || profile._json?.picture || "";
         let user = await User.findOne({ email });
         if (!user) {
           user = await User.create({
             username: profile.displayName,
             email: profile.emails[0].value,
+            picture,
             password: null,
             provider: "google",
           });
