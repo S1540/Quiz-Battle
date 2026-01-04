@@ -62,8 +62,34 @@ const HomePage = () => {
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDE2djhoOHYtOGgtOHptMCA4djhoOHYtOGgtOHptOCA4djhoOHYtOGgtOHptLTggMHY4aDh2LThoLTh6bS04LTh2OGg4di04aC04em0wLTh2OGg4di04aC04em04IDB2OGg4di04aC04eiIvPjwvZz48L2c+PC9zdmc+')] opacity-20"></div>
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-32">
+          <div className="hidden sm:block fixed left-0 z-50">
+            <div className="relative h-84 w-12 shadow-2xl flex items-center justify-center overflow-hidden">
+              {/* Animated Background Pattern */}
+              <div className="absolute inset-0 bg-amber-600/70"></div>
+
+              {/* Vertical Text */}
+              <div className="relative writing-mode-vertical transform rotate-180">
+                <h3 className="text-white font-bold text-sm tracking-widest whitespace-nowrap flex items-center gap-2">
+                  <span className="bg-red-500 text-white px-2 py-1 rounded font-black text-xs animate-pulse">
+                    NEW
+                  </span>
+                  <span className="text-white">
+                    Play With Friends Launching Soon
+                  </span>
+                </h3>
+              </div>
+            </div>
+          </div>
+
+          <style jsx>{`
+            .writing-mode-vertical {
+              writing-mode: vertical-rl;
+              text-orientation: mixed;
+            }
+          `}</style>
+
           <div className="text-center">
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black text-white mb-6 animate-fade-in">
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black text-white mb-6 animate-fade-in ">
               Ready to{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500">
                 Battle?

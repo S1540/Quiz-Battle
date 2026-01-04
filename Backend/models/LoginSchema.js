@@ -28,6 +28,36 @@ const loginSchema = new mongoose.Schema(
     picture: {
       type: String,
     },
+    stats: {
+      totalScore: {
+        type: Number,
+        default: 0,
+      },
+      totalStars: {
+        type: Number,
+        default: 0,
+      },
+      questionsAnswered: {
+        type: Number,
+        default: 0,
+      },
+      correctAnswers: {
+        type: Number,
+        default: 0,
+      },
+      wrongAnswers: {
+        type: Number,
+        default: 0,
+      },
+      accuracy: {
+        type: Number,
+        default: 0,
+      },
+      totalScore: {
+        type: Number,
+        default: 0,
+      },
+    },
   },
   { timestamps: true }
 );

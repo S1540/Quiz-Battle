@@ -67,6 +67,7 @@ const OnlineQuiz = () => {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify({
           questionId: question._id,
           selectedOption: selectedOption,

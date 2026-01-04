@@ -1,6 +1,11 @@
 const express = require("express");
+const cookieParser = require("cookie-parser");
+const dotenv = require("dotenv").config();
+const jwt = require("jsonwebtoken");
 const router = express.Router();
+router.use(cookieParser());
 const Question = require("../models/QuestionSchema");
+const User = require("../models/LoginSchema");
 
 router.get("/get-questions", async (req, res) => {
   try {
@@ -25,8 +30,25 @@ router.post("/check-answer", async (req, res) => {
     if (!question) {
       return res.status(404).json({ message: "Question not found" });
     }
+    // jwt logic for each user
+    const token = req.cookies.token;
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findOne({ email: decoded.email });
 
     const isCorrect = question.correctAnswer === selectedOption;
+    user.stats.questionsAnswered += 1;
+    if (isCorrect) {
+      user.stats.correctAnswers += 1;
+      user.stats.totalScore += question.points;
+      user.stats.totalStars += question.maxStars;
+      user.stats.accuracy = Math.round(
+        (user.stats.correctAnswers / user.stats.questionsAnswered) * 100
+      );
+    } else {
+      user.stats.wrongAnswers += 1;
+    }
+    await user.save();
+
     return res.status(200).json({
       success: true,
       isCorrect: isCorrect,

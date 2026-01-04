@@ -42,12 +42,12 @@ const ProfilePage = () => {
 
   // Mock data (replace with real data from backend)
   const stats = {
-    totalScore: 2450,
-    totalStars: 87,
-    questionsAnswered: 156,
-    correctAnswers: 124,
-    wrongAnswers: 32,
-    accuracy: 79,
+    totalScore: user.stats.totalScore,
+    totalStars: user.stats.totalStars,
+    questionsAnswered: user.stats.questionsAnswered,
+    correctAnswers: user.stats.correctAnswers,
+    wrongAnswers: user.stats.wrongAnswers,
+    accuracy: user.stats.accuracy,
     streak: 7,
     rank: 142,
     totalPlayers: 5000,
@@ -104,7 +104,7 @@ const ProfilePage = () => {
               <div className="flex flex-col items-center">
                 {/* Avatar */}
                 <div className="relative mb-4">
-                  <div className="w-24 h-24 rounded-md bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
+                  <div className="w-24 h-24 rounded-md bg-linear-to-br from-purple-500 to-pink-500 flex items-center justify-center">
                     <img
                       src={
                         user?.picture ||
