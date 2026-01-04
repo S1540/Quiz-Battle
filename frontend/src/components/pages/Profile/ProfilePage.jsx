@@ -42,7 +42,7 @@ const ProfilePage = () => {
 
   // Mock data (replace with real data from backend)
   const stats = {
-    totalScore: user.stats.totalScore,
+    totalScore: user?.stats?.totalScore,
     totalStars: user.stats.totalStars,
     questionsAnswered: user.stats.questionsAnswered,
     correctAnswers: user.stats.correctAnswers,

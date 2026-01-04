@@ -9,6 +9,7 @@ import LoginSignup from "./components/pages/LoginSignup";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import ProfilePage from "./components/pages/Profile/ProfilePage";
+import HelpSupport from "./components/pages/HelpSupport/HelpSupport";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -30,7 +31,7 @@ function App() {
                 </ProtectedRoute>
               }
             />
-
+            <Route path="/support" element={<HelpSupport />} />
             <Route path="/profile" element={<ProfilePage />} />
           </Routes>
           <Footer />
