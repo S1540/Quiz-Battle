@@ -9,7 +9,7 @@ const Header = () => {
   const navLinks = [
     { nav: "HOME", link: "/" },
     { nav: "ONLINE QUIZ", link: "/onlineQuiz" },
-    { nav: "PREMIUM QUIZ", link: "/premiumQuiz" },
+    { nav: "PREMIUM QUIZ", link: "/premium" },
     { nav: "HISTORY", link: "/history" },
     { nav: "HELP & SUPPORT", link: "/support" },
     { nav: "PROFILE", link: "/profile" },

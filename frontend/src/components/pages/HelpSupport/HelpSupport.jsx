@@ -165,10 +165,14 @@ const HelpSupport = () => {
     },
   ];
 
-  const filteredFaqs =
-    selectedCategory === "all"
-      ? faqs
-      : faqs.filter((faq) => faq.category === selectedCategory);
+  const filteredFaqs = faqs.filter((faq) => {
+    const matchedCategory =
+      faq.category === selectedCategory || selectedCategory === "all";
+    const matchedQuestion = faq.question
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase());
+    return matchedCategory && matchedQuestion;
+  });
 
   const handleFormChange = (e) => {
     setContactForm({ ...contactForm, [e.target.name]: e.target.value });

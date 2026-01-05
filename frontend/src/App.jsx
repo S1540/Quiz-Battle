@@ -10,6 +10,7 @@ import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import ProfilePage from "./components/pages/Profile/ProfilePage";
 import HelpSupport from "./components/pages/HelpSupport/HelpSupport";
+import PremiumQuiz from "./components/pages/Premium/PremiumQuiz";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -32,6 +33,7 @@ function App() {
               }
             />
             <Route path="/support" element={<HelpSupport />} />
+            <Route path="/premium" element={<PremiumQuiz />} />
             <Route path="/profile" element={<ProfilePage />} />
           </Routes>
           <Footer />
