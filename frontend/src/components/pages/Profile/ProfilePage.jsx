@@ -40,6 +40,14 @@ const ProfilePage = () => {
     return <LoginSignup />;
   }
 
+  const handleLogout = () => {
+    fetch("http://localhost:5000/api/auth/logout", {
+      method: "POST",
+      credentials: "include",
+    });
+    window.location.reload();
+  };
+
   // Mock data (replace with real data from backend)
   const stats = {
     totalScore: user?.stats?.totalScore,
@@ -90,7 +98,10 @@ const ProfilePage = () => {
             <button className="p-2.5 bg-zinc-800 border border-zinc-700 rounded-md hover:bg-zinc-700 transition-colors">
               <Settings className="w-5 h-5 text-gray-400" />
             </button>
-            <button className="p-2.5 bg-zinc-800 border border-zinc-700 rounded-md hover:bg-red-500/20 hover:border-red-500/50 transition-colors group">
+            <button
+              onClick={handleLogout}
+              className="p-2.5 bg-zinc-800 border border-zinc-700 rounded-md hover:bg-red-500/20 hover:border-red-500/50 transition-colors group"
+            >
               <LogOut className="w-5 h-5 text-gray-400 group-hover:text-red-400" />
             </button>
           </div>
